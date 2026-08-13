@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            background: #f4f7fb;
+            padding: 20px;
+        }
+        form{
+            width: 450px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+        }
+        form p{
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color:#444
+        }
+        button{
+            width: 70%;
+            margin-top: 20px;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: #4cb1d3;
+            color:black;
+            font-size: 16px;
+            transition: .3s;
+        }
+        button:hover{
+            background:#3578d6;
+        }
+        hr{
+            margin: 40px 0;
+            border: none;
+            border-top: 2px solid #ddd;
+        }
+        .container{
+            display: flex;
+            flex-wrap: wrap;
+            /* width: 100%;
+            height: 100%; */
+            /* background-color: cornflowerblue; */
+        }
+        .cards{
+            width: 260px;
+            /* height: 250px; */
+            background-color:rgb(176, 255, 130);
+            margin: 5px;
+            padding: 5px;
+            border-radius: 12px;
+            transition: .3s;
+            
+        }
+        .cards_unchecked{
+            width: 260px;
+            /* height: 250px; */
+            background-color:rgb(241, 103, 56);
+            margin: 5px;
+            padding: 5px;
+            border-radius: 12px;
+            transition: .3s;
+        }
+        .cards:hover, .cards_unchecked:hover{
+            transform:scale(1.03);
+        }
+        .cards button{
+            margin-top: 8px;
+            background: white;
+            color: #00b894;
+            font-weight: bold;
+        }
+        .cards button:hover{
+            background: #eee;
+        }
+    </style>
+</head>
+<body>
+    <form action="www.google.com" method="post">
+        <p>Enter Your Name:</p>
+        <input type="text" name="" id="inputname">
+
+        <p>Enter your email:</p>
+        <input type="email" name="" id="inputemail">
+
+        <p>Enter your phone no: </p>
+        <input type="number" name="" minlength="10" maxlength="10" id="inputphone">
+
+        <p>Enter your age: </p>
+        <input type="number" name="" id="inputage">
+
+        <p>Are you checked in?</p>
+        <input type="checkbox" name="" id="checkbox">
+
+        <input type="text" name="" id="room" disabled placeholder="Enter your Room No: ">
+
+        <button class="submit" >Submit</button>
+    </form>
+<hr>
+<h1><center>Guest's Details</center></h1>
+<div class="container">
+    <!-- <div class="cards">
+        <p>Name:</p>
+        <p>PhoneNO:</p>
+        <p>Age:</p>
+        <p>Email:</p>
+        <P>RoomNo:</P>
+    </div> -->
+</div>
+    <script>
+        let button = document.querySelector('button')
+        let name = document.querySelector('#inputname')
+        let email = document.querySelector('#inputemail')
+        let phone = document.querySelector('#inputphone')
+        let age = document.querySelector('#inputage')
+        let form = document.querySelector('form')
+        let checkbox = document.querySelector('#checkbox')
+        let room = document.querySelector('#room')
+        let guestArray=[];
+
+        checkbox.addEventListener('click',()=>{
+            if(checkbox.checked){
+               room.removeAttribute("disabled");
+            }
+            else if(!checkbox.checked){
+                room.setAttribute("disabled",true);
+            }
+        })
+
+        form.addEventListener('submit',(event)=>{
+            event.preventDefault();
+            
+            a={
+                name:name.value,
+                email:email.value,
+                phone:phone.value,
+                age:age.value,
+                room:room.value
+            }
+            // console.log(a);
+
+            guestArray.push(a);
+            // console.log(guestArray);
+
+
+            let container=document.querySelector('.container')
+            let newDiv = document.createElement('div')
+            container.appendChild(newDiv)
+
+            newDiv.innerHTML=`<h3>NAME: ${a.name}</h3>
+                <p>AGE: ${a.age}</p>
+                <p>PHONENO: ${a.phone}</p>
+                <p>EMAIL: ${a.email}</p>
+                <p>ROOM-NO: ${a.room}</p>
+            `;
+            if (checkbox.checked) {
+                newDiv.classList.add('cards');
+
+                let checkoutBtn = document.createElement("button");
+                checkoutBtn.innerText = "Check OUT";
+
+                newDiv.appendChild(checkoutBtn);
+
+                checkoutBtn.addEventListener("click", () => {
+                    newDiv.classList.remove("cards");
+                    newDiv.classList.add("cards_unchecked");
+                    checkoutBtn.remove();
+                });
+            } else {
+                newDiv.classList.add("cards_unchecked");
+            }
+        })
+        
+
+        
+    </script>
+</body>
+</html>
